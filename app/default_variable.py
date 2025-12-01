@@ -1,1 +1,9 @@
 NAME_PROGRAM = "Спектральный график молекул"
+
+UV_START = 200
+UV_STOP = 400
+UV_NUM = 500
+
+IR_START = 500
+IR_STOP = 3500
+IR_NUM = 1000

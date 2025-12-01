@@ -10,5 +10,5 @@ class MoleculaPeaks:
 class Molecula:
     name: str
     smiles: str
-    width_peaks: int
+    width_peak: int
     peaks: List[MoleculaPeaks]

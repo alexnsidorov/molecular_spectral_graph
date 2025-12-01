@@ -1,7 +1,7 @@
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QMainWindow, QStyle, QSplitter, QHBoxLayout, QTabWidget, QWidget
 from app.default_variable import NAME_PROGRAM
-from app.window.ui.ui_list_molecula_view import UIListMoleculaView
+from app.window.ui.list_molecula_view import UIListMoleculaView
 
 class UIMainWindow(QMainWindow):
     def __init__(self, parent=None):

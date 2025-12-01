@@ -1,5 +1,5 @@
 import sys
-from app.window.ui.ui_main_window import UIMainWindow
+from app.window.ui.main_window import UIMainWindow
 from app.window.add_information_molecula import AddInformationMolecula
 
 
