@@ -207,9 +207,9 @@ if __name__ == "__main__":
     spectra_analyzer.plot_spectra('бифенил')
 
     # Способ 2: Интерактивный режим
-    print("\nИнтерактивный режим:")
-    spectra_analyzer.interactive_plot()
+    # print("\nИнтерактивный режим:")
+    # spectra_analyzer.interactive_plot()
 
     # Способ 3: Сравнение молекул
-    print("\nСравнение молекул:")
-    compare_molecules()
+    # print("\nСравнение молекул:")
+    # compare_molecules()

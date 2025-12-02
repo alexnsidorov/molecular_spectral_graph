@@ -7,6 +7,7 @@ class UIMainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle(NAME_PROGRAM)
+        self.setWindowState(Qt.WindowState.WindowMaximized)
 
         menu_bar = self.menuBar()
         file_menu = menu_bar.addMenu("&File")
@@ -28,7 +29,12 @@ class UIMainWindow(QMainWindow):
         _splitter.addWidget(self.list_molecula_widget)
 
         self.tab_widget = QTabWidget(self)
+        self.tab_widget.setTabsClosable(True)
+        self.tab_widget.tabCloseRequested.connect(self._close_tab)
         _splitter.addWidget(self.tab_widget)
 
         _splitter.setStretchFactor(1, 1)
         _splitter.setStretchFactor(2, 2)
+
+    def _close_tab(self, index):
+        self.tab_widget.removeTab(index)

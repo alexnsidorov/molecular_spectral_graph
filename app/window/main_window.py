@@ -4,12 +4,13 @@ import json
 
 from PyQt6.QtCore import QAbstractListModel, Qt, QModelIndex
 
-from typing import List
+from typing import List, Optional
 from app.molecula import Molecula, Params, Peaks
 from app.window.ui.main_window import UIMainWindow
 from app.window.add_information_molecula import AddInformationMolecula
 from pathlib import Path
 
+from app.window.ui.plot_canvas import PlotCanvas
 
 
 class ListMoleculaModel(QAbstractListModel):
@@ -26,6 +27,11 @@ class ListMoleculaModel(QAbstractListModel):
             _molecula: Molecula = self._list_molecula[index.row()]
             return _molecula.name
 
+        return None
+
+    def get_molecula(self, index) -> Optional[Molecula]:
+        if 0 <= index.row() < self.rowCount():
+            return self._list_molecula[index.row()]
         return None
 
     def append_row(self, _molecula: Molecula):
@@ -46,7 +52,7 @@ class MainWindow(UIMainWindow):
         super().__init__(parent)
         self._list_molecula_model = ListMoleculaModel()
         self.list_molecula_widget.list_molecula_view.setModel(self._list_molecula_model)
-
+        self.list_molecula_widget.list_molecula_view.doubleClicked.connect(self._open_widget_graph)
         self.exit_program.triggered.connect(lambda: sys.exit(0))
 
         self.list_molecula_widget.add_molecula.clicked.connect(self.show_dialog_add_molecula)
@@ -74,10 +80,15 @@ class MainWindow(UIMainWindow):
                         name=key,
                         smiles=val['SMILES'],
                         uv_params=Params(width=val["uv_params"]["width"],
-                                         peaks = [Peaks(peak=intensity,
-                                                        intensity=peak) for peak, intensity in val["uv_params"]["peaks"]]),
-                        ir_params=Params(peaks = [Peaks(peak=intensity,
-                                                        intensity=peak) for peak, intensity in val["ir_params"]["peaks"]])
+                                         peaks = [Peaks(peak=peak,
+                                                        intensity=intensity) for peak, intensity in val["uv_params"]["peaks"]]),
+                        ir_params=Params(peaks = [Peaks(peak=peak,
+                                                        intensity=intensity) for peak, intensity in val["ir_params"]["peaks"]])
                     )
 
                     self._list_molecula_model.append_row(molecula)
+
+    def  _open_widget_graph(self, index: QModelIndex):
+        molecula = self._list_molecula_model.get_molecula(index)
+        _plot_canvas = PlotCanvas(molecula=molecula)
+        self.tab_widget.addTab(_plot_canvas, molecula.name)

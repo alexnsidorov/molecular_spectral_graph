@@ -1,10 +1,11 @@
-from ast import Param
-
 import numpy as np
 from typing import List, Union
-from dataclasses import dataclass, field
+from dataclasses import dataclass
+
+from rdkit import Chem
+from rdkit.Chem import Draw
+
 import app.default_variable as dv
-from typing import Optional
 
 @dataclass
 class Peaks:
@@ -39,7 +40,16 @@ class Molecula:
         wavelength = np.linspace(dv.UV_START, dv.UV_STOP, dv.UV_NUM)
         absorbance = np.zeros_like(wavelength)
 
-        for uv_peak in self.uv_params.peaks:
-            absorbance += uv_peak.intensity * np.exp(-((wavelength - uv_peak.peak) / self.uv_params.width) ** 2)
+        for peak in self.uv_params.peaks:
+            absorbance += peak.intensity * np.exp(-((wavelength - peak.peak) / self.uv_params.width) ** 2)
 
         return wavelength, absorbance
+
+    def draw_molecule(self, height=300, width=300):
+        """Отрисовка молекулы"""
+
+        mol = Chem.MolFromSmiles(self.smiles)
+        if mol:
+            img = Draw.MolToImage(mol, size=(height, width))
+            return img
+        return None
