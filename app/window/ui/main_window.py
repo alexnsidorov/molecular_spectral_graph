@@ -1,5 +1,5 @@
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QMainWindow, QStyle, QSplitter, QHBoxLayout, QTabWidget, QWidget
+from PyQt6.QtWidgets import QMainWindow, QStyle, QSplitter, QHBoxLayout, QTabWidget, QWidget, QListView
 from app.default_variable import NAME_PROGRAM
 from app.window.ui.list_molecula_view import UIListMoleculaView
 
@@ -24,8 +24,10 @@ class UIMainWindow(QMainWindow):
 
         close_icon = self.style().standardIcon(QStyle.StandardPixmap.SP_TitleBarCloseButton)
         self.exit_program = file_menu.addAction(close_icon, "&Exit")
+        self.load_data_action = menu_bar.addAction("Загрузить молекулы")
+        # self.export_data_action = menu_bar.addAction("Выгрузить молекулы")
 
-        self.list_molecula_widget = UIListMoleculaView(self)
+        self.list_molecula_widget = QListView(self)
         _splitter.addWidget(self.list_molecula_widget)
 
         self.tab_widget = QTabWidget(self)

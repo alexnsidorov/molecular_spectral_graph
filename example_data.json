@@ -23,7 +23,7 @@
     }
   },
   "Дифенил": {
-    "SMILES": "C1=CC=C(C=C1)C(C2=CC=CC=C2",
+    "SMILES": "C1=CC=C(C=C1)CCC2=CC=CC=C2",
     "uv_params":{
       "width": 15,
       "peaks":[

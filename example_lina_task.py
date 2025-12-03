@@ -55,7 +55,9 @@ class MoleculeSpectra:
         params = ir_params.get(molecule_name, ir_params['бифенил'])
 
         for peak_wn, intensity in params['peaks']:
+            print(F"{peak_wn=} {intensity=}")
             transmittance -= intensity * np.exp(-((wavenumber - peak_wn) / 20) ** 2)
+            print(transmittance)
 
         transmittance = np.clip(transmittance, 0, 1)
         return wavenumber, transmittance
