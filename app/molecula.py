@@ -2,10 +2,12 @@ import numpy as np
 from typing import List, Union
 from dataclasses import dataclass
 
+from PyQt6.QtCore import pyqtSignal, QObject
 from rdkit import Chem
 from rdkit.Chem import Draw
 
 import app.default_variable as dv
+
 
 @dataclass
 class Peaks:
@@ -18,11 +20,17 @@ class Params:
     width: int = 0
 
 @dataclass
-class Molecula:
+class Molecula(QObject):
     name: str
     smiles: str
     ir_params: Params
     uv_params: Params
+
+    i_am_removed = pyqtSignal()
+    
+    def __post_init__(self):
+        super().__init__()
+
 
     def get_ir_spectrum(self):
         """Генерация модельного ИК спектра"""
